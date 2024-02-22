@@ -1,11 +1,10 @@
-import { useState, useEffect } from "react";
+import React, { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import { useCookies } from "react-cookie";
 import axios from "axios";
 import { Header } from "../components/Header";
 import { url } from "../const";
 import "./home.scss";
-import { format } from "prettier";
 
 export const Home = () => {
   const [isDoneDisplay, setIsDoneDisplay] = useState("todo"); // todo->未完了 done->完了
@@ -14,6 +13,8 @@ export const Home = () => {
   const [tasks, setTasks] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
   const [cookies] = useCookies();
+
+  // 現在時刻の取得
   var reminder = new Date();
   const handleIsDoneDisplayChange = (e) => setIsDoneDisplay(e.target.value);
   const formatDateTime = (date) => {
@@ -38,7 +39,7 @@ export const Home = () => {
       .catch((err) => {
         setErrorMessage(`リストの取得に失敗しました。${err}`);
       });
-  });
+  }, []);
 
   useEffect(() => {
     const listId = lists[0]?.id;
@@ -55,6 +56,7 @@ export const Home = () => {
           res.data.tasks.forEach((task) => {
             // 時間差分を計算
             task.remind = reminder - new Date(task.limit);
+            // 残りの日付を計算
             task.remind = `${Math.floor(task.remind / (1000 * 60 * 60 * 24)) * -1}日 
                            ${Math.floor((task.remind / (1000 * 60 * 60)) % 24) * -1}時間 
                            ${Math.floor((task.remind / (1000 * 60)) % 60) * -1}分`;
@@ -110,7 +112,9 @@ export const Home = () => {
                 <li
                   key={key}
                   className={`list-tab-item ${isActive ? "active" : ""}`}
-                  onClick={() => handleSelectList(list.id)}>
+                  onClick={() => handleSelectList(list.id)}
+                  tabIndex={0}
+                  onKeyDown={() => handleSelectList(list.id)}>
                   {list.title}
                 </li>
               );
@@ -186,6 +190,7 @@ const Tasks = (props) => {
               {/* 期限の追加 */}
               期限：{task.limit}
               <br />
+              {/* 残り時間を赤文字で表示 */}
               残り：<span className="task-item-remind">{task.remind}</span>
               <br />
               進捗：{task.done ? "完了" : "未完了"}

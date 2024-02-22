@@ -5,24 +5,8 @@ import { url } from "../const";
 import { Header } from "../components/Header";
 import "./newTask.scss";
 import { useNavigate } from "react-router-dom";
-// import { format } from "date-fns";
-
-const limits = (limit) => {
-  const year = limit.getFullYear();
-  const month = limit.getMonth() + 1;
-  const day = limit.getDate();
-  const hour = limit.getHours();
-  const minute = limit.getMinutes();
-
-  return `${year}-${month}-${day} ${hour}:${minute}`;
-};
 
 export const NewTask = () => {
-  // const formatDate = format("yyyy-MM-dd HH:mm");
-  // const limitDate = new Date("2000");
-  // const limitString = formatDate(limitDate);
-  // console.log(limitString);
-
   const [selectListId, setSelectListId] = useState();
   const [lists, setLists] = useState([]);
   const [title, setTitle] = useState("");

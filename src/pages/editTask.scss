@@ -35,3 +35,33 @@
 .error-message {
   color: #ff3333;
 }
+
+@media (max-width: 768px) and (min-width: 321px) {
+  .edit-task {
+    width: 70%;
+  }
+  .edit-task-title,
+  .edit-task-detail {
+    width: 200px;
+  }
+  .delete-task-button,
+  .edit-task-button {
+    width: 60px;
+    height: 30px;
+  }
+}
+
+@media (max-width: 320px) {
+  .edit-task {
+    width: 50%;
+  }
+  .edit-task-title,
+  .edit-task-detail {
+    width: 150px;
+  }
+  .delete-task-button,
+  .edit-task-button {
+    width: 50px;
+    height: 25px;
+  }
+}

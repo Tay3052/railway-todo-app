@@ -21,3 +21,25 @@
   height: 40px;
   border-radius: 5px;
 }
+
+@media (max-width: 768px) and (min-width: 321px) {
+  .new-list {
+    width: 70%;
+  }
+  .new-list-title {
+    width: 200px;
+  }
+  .new-list-button {
+    width: 60px;
+    height: 30px;
+  }
+}
+
+@media (max-width: 320px) {
+  .new-list {
+    width: 50%;
+  }
+  .new-list-title {
+    width: 150px;
+  }
+}

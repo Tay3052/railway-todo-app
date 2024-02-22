@@ -75,7 +75,7 @@ export const EditTask = () => {
       .catch((err) => {
         setErrorMessage(`タスク情報の取得に失敗しました。${err}`);
       });
-  });
+  }, []);
 
   return (
     <div>
