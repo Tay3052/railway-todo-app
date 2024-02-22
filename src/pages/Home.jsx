@@ -14,6 +14,7 @@ export const Home = () => {
   const [tasks, setTasks] = useState([]);
   const [errorMessage, setErrorMessage] = useState("");
   const [cookies] = useCookies();
+  var reminder = new Date();
   const handleIsDoneDisplayChange = (e) => setIsDoneDisplay(e.target.value);
   const formatDateTime = (date) => {
     const year = date.getFullYear();
@@ -21,9 +22,9 @@ export const Home = () => {
     const day = String(date.getDate()).padStart(2, "0");
     const hours = String(date.getHours()).padStart(2, "0");
     const minutes = String(date.getMinutes()).padStart(2, "0");
-
     return `${year}/${month}/${day} ${hours}:${minutes}`;
   };
+
   useEffect(() => {
     axios
       .get(`${url}/lists`, {
@@ -50,6 +51,16 @@ export const Home = () => {
           },
         })
         .then((res) => {
+          // 配列全てに対して期限のフォーマットを行う
+          res.data.tasks.forEach((task) => {
+            // 時間差分を計算
+            task.remind = reminder - new Date(task.limit);
+            task.remind = `${Math.floor(task.remind / (1000 * 60 * 60 * 24)) * -1}日 
+                           ${Math.floor((task.remind / (1000 * 60 * 60)) % 24) * -1}時間 
+                           ${Math.floor((task.remind / (1000 * 60)) % 60) * -1}分`;
+            // String型に変換
+            task.limit = formatDateTime(new Date(task.limit));
+          });
           setTasks(res.data.tasks);
         })
         .catch((err) => {
@@ -174,6 +185,8 @@ const Tasks = (props) => {
               <br />
               {/* 期限の追加 */}
               期限：{task.limit}
+              <br />
+              残り：<span className="task-item-remind">{task.remind}</span>
               <br />
               進捗：{task.done ? "完了" : "未完了"}
             </Link>
