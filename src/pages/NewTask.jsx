@@ -11,6 +11,7 @@ export const NewTask = () => {
   const [lists, setLists] = useState([]);
   const [title, setTitle] = useState("");
   const [detail, setDetail] = useState("");
+  // 期限の追加(limitの追加)
   const [limit, setLimit] = useState(new Date());
   const [errorMessage, setErrorMessage] = useState("");
   const [cookies] = useCookies();
@@ -19,7 +20,7 @@ export const NewTask = () => {
   const handleDetailChange = (e) => setDetail(e.target.value);
   const handleSelectList = (id) => setSelectListId(id);
 
-  // 期限の追加
+  // 期限の追加(limitをセットさせる)
   const handleLimit = (_limit) => {
     setLimit(new Date(_limit.target.value));
   };
@@ -29,6 +30,7 @@ export const NewTask = () => {
       title: title,
       detail: detail,
       done: false,
+      // limit = Date型でないとPOSTできない
       limit: limit,
     };
     axios

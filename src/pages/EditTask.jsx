@@ -109,9 +109,9 @@ export const EditTask = () => {
             type="datetime-local"
             onChange={handleLimit}
             className="new-task-time"
+            value={limit.toISOString().substring(0, 16)}
           />
           <br />
-
           <div>
             <input
               type="radio"

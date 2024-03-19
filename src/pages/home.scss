@@ -1,7 +1,8 @@
 .taskList {
   margin: 50px auto;
   list-style: none;
-  width: 1000px;
+  width: 90%;
+  padding: 0 30px;
 }
 
 .list-header {
@@ -90,6 +91,7 @@
   }
   .taskList {
     width: 70%;
+    padding: 0 15px;
   }
   .list-tab-item {
     width: 70px;
@@ -103,10 +105,13 @@
 
 @media (max-width: 320px) {
   body {
-    font-size: 0.8rem;
+    font-size: 0.7rem;
   }
   .taskList {
     width: 50%;
+  }
+  .task-item {
+    height: 180px;
   }
   .list-tab-item {
     width: 80px;

@@ -16,7 +16,10 @@ export const Home = () => {
 
   // 現在時刻の取得
   var reminder = new Date();
+
   const handleIsDoneDisplayChange = (e) => setIsDoneDisplay(e.target.value);
+
+  // Date型をString型に変換
   const formatDateTime = (date) => {
     const year = date.getFullYear();
     const month = String(date.getMonth() + 1).padStart(2, "0");
@@ -55,11 +58,11 @@ export const Home = () => {
           // 配列全てに対して期限のフォーマットを行う
           res.data.tasks.forEach((task) => {
             // 時間差分を計算
-            task.remind = reminder - new Date(task.limit);
-            // 残りの日付を計算
-            task.remind = `${Math.floor(task.remind / (1000 * 60 * 60 * 24)) * -1}日 
-                           ${Math.floor((task.remind / (1000 * 60 * 60)) % 24) * -1}時間 
-                           ${Math.floor((task.remind / (1000 * 60)) % 60) * -1}分`;
+            task.remind = new Date(task.limit) - reminder;
+            // 残りの時間を計算
+            task.remind = `${Math.floor(task.remind / (1000 * 60 * 60 * 24))}日 
+                           ${Math.floor((task.remind / (1000 * 60 * 60)) % 24)}時間 
+                           ${Math.floor((task.remind / (1000 * 60)) % 60)}分`;
             // String型に変換
             task.limit = formatDateTime(new Date(task.limit));
           });
@@ -114,7 +117,7 @@ export const Home = () => {
                   className={`list-tab-item ${isActive ? "active" : ""}`}
                   onClick={() => handleSelectList(list.id)}
                   tabIndex={0}
-                  onKeyDown={() => handleSelectList(list.id)}>
+                  onKeyDown={(key) => handleSelectList(list.id)}>
                   {list.title}
                 </li>
               );
